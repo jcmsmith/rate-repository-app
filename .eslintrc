@@ -13,6 +13,14 @@
   "rules": {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "no-unused-vars": [2, { "args": "all", "argsIgnorePattern": "^_" }]
+    "no-unused-vars": [
+      2,
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "vars": "local",
+        "varsIgnorePattern": "^_"
+      }
+    ]
   }
 }
