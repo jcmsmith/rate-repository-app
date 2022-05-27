@@ -1,6 +1,6 @@
 //import Constants from "expo-constants";
 import { StyleSheet, View } from "react-native";
-import { Route, Redirect } from "react-router-native";
+import { Routes, Route, Navigate } from "react-router-native";
 
 import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
@@ -24,17 +24,13 @@ const Main = () => {
         <AppBar />
       </View>
       <View style={styles.mainBackground}>
-        <Route exact path="/">
-          <RepositoryList />
-        </Route>
+        <Routes>
+          <Route exact path="/" element={<RepositoryList />} />
 
-        <Route path="/login">
-          <SignIn />
-        </Route>
+          <Route path="/login" element={<SignIn />} />
 
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </View>
     </>
   );
