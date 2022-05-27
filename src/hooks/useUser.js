@@ -8,7 +8,7 @@ const useUser = () => {
   const client = useApolloClient();
   const authStorage = useAuthStorage();
 
-  const [authenticate, _result] = useMutation(LOGIN, {
+  const [authenticate] = useMutation(LOGIN, {
     onError: (error) => {
       console.error("login mutation error:", error);
     },
@@ -18,12 +18,15 @@ const useUser = () => {
     onCompleted: (data) => console.log("userQuery oncompleted", data),
   });
 
+  //console.log("userQuery loading", loading);
+  //console.log("userQuery result", result);
+
   const signIn = async (username, password) => {
     const { data } = await authenticate({
       variables: { credentials: { username, password } },
     });
     console.log("authenticate data", data);
-    await authStorage.setAccessToken(`Bearer ${data.authenticate.accessToken}`);
+    await authStorage.setAccessToken(data.authenticate.accessToken);
     await client.resetStore();
 
     const check = await authStorage.getAccessToken();
