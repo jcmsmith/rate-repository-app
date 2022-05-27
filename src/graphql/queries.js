@@ -20,3 +20,12 @@ export const GET_REPOSITORIES = gql`
     }
   }
 `;
+
+export const GET_CURRENTUSER = gql`
+  query {
+    me {
+      id
+      username
+    }
+  }
+`;
