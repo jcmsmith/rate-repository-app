@@ -22,8 +22,8 @@ const useUser = () => {
     const { data } = await authenticate({
       variables: { credentials: { username, password } },
     });
-    console.log(data);
-    await authStorage.setAccessToken(`bearer ${data.authenticate.accessToken}`);
+    console.log("authenticate data", data);
+    await authStorage.setAccessToken(`Bearer ${data.authenticate.accessToken}`);
     await client.resetStore();
 
     const check = await authStorage.getAccessToken();
