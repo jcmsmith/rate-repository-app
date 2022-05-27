@@ -5,7 +5,7 @@ import { LOGIN } from "../graphql/mutations";
 const useSignIn = () => {
   const [mutate, result] = useMutation(LOGIN, {
     onError: (error) => {
-      console.error("mutation error:", error.graphQLErrors[0].message);
+      console.error("login mutation error:", error.graphQLErrors[0].message);
     },
   });
 
