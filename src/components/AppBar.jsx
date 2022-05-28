@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, StyleSheet, Pressable, ScrollView } from "react-native";
-import { Link } from "react-router-native";
+import { Link, useNavigate } from "react-router-native";
 import Constants from "expo-constants";
+import { useQuery } from "@apollo/client";
 
-import useUser from "../hooks/useUser";
 import { AppBarText } from "./Text";
 import theme from "../theme";
+import { GET_CURRENTUSER } from "../graphql/queries";
+import useAuth from "../hooks/useAuth";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,38 +23,19 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const [user, setUser] = useState();
-  const { getCurrentUser } = useUser();
-
-  useEffect(() => {
-    getCurrentUser()
-      .then((result) => {
-        if (result && result.me !== null) {
-          setUser(result.me.username);
-        }
-      })
-      .catch((reason) =>
-        console.log("getCurrentUser promise rejection", reason)
-      );
-  }, []);
-
   return (
     <>
       <View style={styles.container}>
         <ScrollView horizontal>
-          {user ? (
-            <AppBarTab text="Logout" url="/logout" />
-          ) : (
-            <AppBarTab text="Login" url="/login" />
-          )}
-          <AppBarTab text="Repositories" url="/" />
+          <AuthTab />
+          <LinkTab text="Repositories" url="/" />
         </ScrollView>
       </View>
     </>
   );
 };
 
-const AppBarTab = ({ text, url }) => {
+const LinkTab = ({ text, url }) => {
   return (
     <>
       <View style={styles.tab}>
@@ -61,6 +44,45 @@ const AppBarTab = ({ text, url }) => {
             <AppBarText text={text} />
           </Link>
         </Pressable>
+      </View>
+    </>
+  );
+};
+
+const AuthTab = () => {
+  const [user, setUser] = useState(null);
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useQuery(GET_CURRENTUSER, {
+    onError: (error) => console.log("userquery error", error),
+    onCompleted: (data) => {
+      if (data && data.me !== null) {
+        setUser(data.me.id);
+      }
+    },
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const handleLogout = async () => {
+    await signOut();
+    setUser(null);
+    navigate("/");
+  };
+
+  //console.log("currentUser", user);
+
+  return (
+    <>
+      <View style={styles.tab}>
+        {user ? (
+          <Pressable onPressOut={handleLogout}>
+            <AppBarText text={"Logout"} />
+          </Pressable>
+        ) : (
+          <LinkTab text={"Login"} url={"/login"} />
+        )}
       </View>
     </>
   );

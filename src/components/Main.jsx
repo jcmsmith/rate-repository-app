@@ -6,7 +6,6 @@ import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
 import theme from "../theme";
 import SignIn from "./SignIn";
-import SignOut from "./SignOut";
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -29,7 +28,6 @@ const Main = () => {
           <Route exact path="/" element={<RepositoryList />} />
 
           <Route exact path="/login" element={<SignIn />} />
-          <Route exact path="/logout" element={<SignOut />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

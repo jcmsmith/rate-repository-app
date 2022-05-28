@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 import FormikTextInput from "./FormikTextInput";
-import useUser from "../hooks/useUser";
+import useAuth from "../hooks/useAuth";
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -18,17 +18,17 @@ const validationSchema = yup.object().shape({
 });
 
 const SignInForm = () => {
-  const _navigate = useNavigate();
-  const { signIn, getCurrentUser } = useUser();
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
 
     try {
       await signIn(username, password);
-      const user = await getCurrentUser();
-      console.log("logged in as", user);
-      //navigate("/");
+      // const user = await getCurrentUser();
+      // console.log("logged in as", user);
+      navigate("/");
     } catch (e) {
       console.error(e);
     }
