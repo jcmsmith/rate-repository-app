@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, StyleSheet, Pressable, ScrollView } from "react-native";
-import { Link, useNavigate } from "react-router-native";
+import { useNavigate } from "react-router-native";
 import Constants from "expo-constants";
 import { useQuery } from "@apollo/client";
 
@@ -8,6 +8,7 @@ import { AppBarText } from "./Text";
 import theme from "../theme";
 import { GET_CURRENTUSER } from "../graphql/queries";
 import useAuth from "../hooks/useAuth";
+import Linker from "./Link";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,22 +29,10 @@ const AppBar = () => {
       <View style={styles.container}>
         <ScrollView horizontal>
           <AuthTab />
-          <LinkTab text="Repositories" url="/" />
+          <View style={styles.tab}>
+            <Linker text="Repositories" url="/repositories" />
+          </View>
         </ScrollView>
-      </View>
-    </>
-  );
-};
-
-const LinkTab = ({ text, url }) => {
-  return (
-    <>
-      <View style={styles.tab}>
-        <Pressable>
-          <Link to={url}>
-            <AppBarText text={text} />
-          </Link>
-        </Pressable>
       </View>
     </>
   );
@@ -68,10 +57,8 @@ const AuthTab = () => {
   const handleLogout = async () => {
     await signOut();
     setUser(null);
-    navigate("/");
+    navigate("/repositories");
   };
-
-  //console.log("currentUser", user);
 
   return (
     <>
@@ -81,7 +68,7 @@ const AuthTab = () => {
             <AppBarText text={"Logout"} />
           </Pressable>
         ) : (
-          <LinkTab text={"Login"} url={"/login"} />
+          <Linker text={"Login"} url={"/login"} />
         )}
       </View>
     </>

@@ -72,9 +72,9 @@ export const Subheading = ({ text, style }) => {
   );
 };
 
-export const AppBarText = ({ text, style }) => {
+export const AppBarText = ({ text, style, color = "white" }) => {
   return (
-    <Text fontWeight="bold" fontSize="subheading" color="white" style={style}>
+    <Text fontWeight="bold" fontSize="subheading" color={color} style={style}>
       {text}
     </Text>
   );

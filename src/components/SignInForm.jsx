@@ -28,7 +28,7 @@ const SignInForm = () => {
       await signIn(username, password);
       // const user = await getCurrentUser();
       // console.log("logged in as", user);
-      navigate("/");
+      navigate("/repositories");
     } catch (e) {
       console.error(e);
     }

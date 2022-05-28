@@ -5,7 +5,8 @@ import { Routes, Route, Navigate } from "react-router-native";
 import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
 import theme from "../theme";
-import SignIn from "./SignIn";
+import SignInForm from "./SignInForm";
+import RepositoryDetails from "./RepositoryDetails";
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -25,11 +26,13 @@ const Main = () => {
       </View>
       <View style={styles.mainBackground}>
         <Routes>
-          <Route exact path="/" element={<RepositoryList />} />
+          <Route exact path="/repositories" element={<RepositoryList />} />
 
-          <Route exact path="/login" element={<SignIn />} />
+          <Route path="/repositories/:id" element={<RepositoryDetails />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route exact path="/login" element={<SignInForm />} />
+
+          <Route path="*" element={<Navigate to="/repositories" replace />} />
         </Routes>
       </View>
     </>
