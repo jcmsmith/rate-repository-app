@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 const RepositoryItem = ({ item }) => {
   return (
     <>
-      <View style={styles.background}>
+      <View style={styles.background} testID="repositoryItem">
         <HeaderBox
           image={item.ownerAvatarUrl}
           name={`${item.fullName}`}
@@ -102,11 +102,31 @@ const Details = ({ totalStars, totalForks, totalReviews, rating }) => {
   const reviews = convertToK(totalReviews);
 
   return (
-    <View style={{ flexDirection: "row" }}>
-      <Statistic number={forks} label={"Forks"} />
-      <Statistic number={stars} label={"Stars"} />
-      <Statistic number={reviews} label={"Reviews"} />
-      <Statistic number={rating} label={"Rating"} />
+    <View
+      style={{ flexDirection: "row" }}
+      accessibilityLabel="repositoryDetails"
+    >
+      <Statistic
+        number={forks}
+        label={"Forks"}
+        accessibilityLabel="repositoryForks"
+      />
+      <Statistic
+        number={stars}
+        label={"Stars"}
+        accessibilityLabel="repositoryStars"
+      />
+      <Statistic
+        number={reviews}
+        label={"Reviews"}
+        accessibilityLabel="repositoryReviews"
+        testID="repositoryReviews"
+      />
+      <Statistic
+        number={rating}
+        label={"Rating"}
+        accessibilityLabel="repositoryRating"
+      />
     </View>
   );
 };
