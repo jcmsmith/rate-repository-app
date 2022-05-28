@@ -34,6 +34,10 @@ const SignInForm = () => {
     }
   };
 
+  return <SignInFormContainer onSubmit={onSubmit} />;
+};
+
+export const SignInFormContainer = ({ onSubmit }) => {
   return (
     <>
       <Formik
