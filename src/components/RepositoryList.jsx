@@ -7,16 +7,26 @@ import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
 import ItemSeparator from "./ItemSeparator";
 import TextInput from "./TextInput";
+import { LoadingText } from "./Text";
 
 const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState("CREATED_AT");
   const [orderDirection, setOrderDirection] = useState("DESC");
   const [filter, setFilter] = useState("");
-  const { repositories } = useRepositories(orderBy, orderDirection, filter);
+  const { repositories, loading, fetchMore } = useRepositories({
+    orderBy,
+    orderDirection,
+    filter,
+    first: 10,
+  });
 
   const handleFilterChange = (event) => {
     const value = event.nativeEvent.text;
     setFilter(value);
+  };
+
+  const onEndReached = () => {
+    fetchMore();
   };
 
   const listHeader = () => {
@@ -47,18 +57,28 @@ const RepositoryList = () => {
     );
   };
 
-  console.log("filter", filter);
+  if (loading) {
+    return <LoadingText />;
+  }
 
   return (
-    <RepositoryListContainer repositories={repositories} header={listHeader} />
+    <RepositoryListContainer
+      repositories={repositories}
+      header={listHeader}
+      onEndReached={onEndReached}
+    />
   );
 };
 
-export const RepositoryListContainer = ({ repositories, header }) => {
+export const RepositoryListContainer = ({
+  repositories,
+  header,
+  onEndReached,
+}) => {
   const navigate = useNavigate();
 
   const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
+    ? repositories.edges?.map((edge) => edge.node)
     : [];
 
   return (
@@ -67,6 +87,8 @@ export const RepositoryListContainer = ({ repositories, header }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={header}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       renderItem={({ item, _index, _separators }) => {
         return (
           <>

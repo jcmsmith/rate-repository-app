@@ -50,7 +50,21 @@ export const REPOSITORY_REVIEWS = gql`
     totalCount
     edges {
       ...Review
+      cursor
+    }
+    pageInfo {
+      ...PageInfo
     }
   }
   ${REVIEW}
+  ${PAGE_INFO}
+`;
+
+export const PAGE_INFO = gql`
+  fragment PageInfo on PageInfo {
+    startCursor
+    endCursor
+    hasPreviousPage
+    hasNextPage
+  }
 `;
