@@ -7,6 +7,7 @@ import RepositoryList from "./RepositoryList";
 import theme from "../theme";
 import SignInForm from "./SignInForm";
 import SingleRepository from "./RepositoryDetails";
+import CreateReviewForm from "./CreateReviewForm";
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -29,6 +30,7 @@ const Main = () => {
           <Route exact path="/repositories" element={<RepositoryList />} />
 
           <Route path="/repositories/:id" element={<SingleRepository />} />
+          <Route exact path="/review" element={<CreateReviewForm />} />
 
           <Route exact path="/login" element={<SignInForm />} />
 

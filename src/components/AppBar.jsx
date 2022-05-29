@@ -28,10 +28,13 @@ const AppBar = () => {
     <>
       <View style={styles.container}>
         <ScrollView horizontal>
-          <AuthTab />
           <View style={styles.tab}>
             <Linker text="Repositories" url="/repositories" />
           </View>
+          <View style={styles.tab}>
+            <Linker text="Create a review" url="/review" />
+          </View>
+          <AuthTab />
         </ScrollView>
       </View>
     </>

@@ -102,6 +102,7 @@ const SingleRepository = () => {
         setRepo(data.repository);
       }
     },
+    fetchPolicy: "cache-and-network",
   });
 
   const reviewsQuery = useQuery(GET_REVIEWS, {
@@ -110,6 +111,7 @@ const SingleRepository = () => {
       console.error("Get repo reviews:", error);
     },
     onCompleted: (data) => {
+      console.log("data", data);
       if (data && data.repository.reviews !== null) {
         const receivedReviews = data.repository.reviews.edges.map(
           (edge) => edge.node
@@ -118,6 +120,7 @@ const SingleRepository = () => {
         setReviews(receivedReviews);
       }
     },
+    fetchPolicy: "cache-and-network",
   });
 
   if (repoQuery.loading || reviewsQuery.loading) {
