@@ -45,6 +45,15 @@ export const REVIEW = gql`
   ${USER}
 `;
 
+export const PAGE_INFO = gql`
+  fragment PageInfo on PageInfo {
+    startCursor
+    endCursor
+    hasPreviousPage
+    hasNextPage
+  }
+`;
+
 export const REPOSITORY_REVIEWS = gql`
   fragment RepositoryReviews on ReviewConnection {
     totalCount
@@ -58,13 +67,4 @@ export const REPOSITORY_REVIEWS = gql`
   }
   ${REVIEW}
   ${PAGE_INFO}
-`;
-
-export const PAGE_INFO = gql`
-  fragment PageInfo on PageInfo {
-    startCursor
-    endCursor
-    hasPreviousPage
-    hasNextPage
-  }
 `;

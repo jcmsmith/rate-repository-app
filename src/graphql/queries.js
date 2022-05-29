@@ -42,22 +42,14 @@ export const GET_CURRENTUSER = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-  query repository($repositoryId: ID!) {
-    repository(id: $repositoryId) {
-      ...RepositoryDetails
-    }
-  }
-  ${REPOSITORY_DETAILS}
-`;
-
-export const GET_REVIEWS = gql`
   query repository($repositoryId: ID!, $after: String, $first: Int) {
     repository(id: $repositoryId) {
-      id
+      ...RepositoryDetails
       reviews(after: $after, first: $first) {
         ...RepositoryReviews
       }
     }
   }
   ${REPOSITORY_REVIEWS}
+  ${REPOSITORY_DETAILS}
 `;

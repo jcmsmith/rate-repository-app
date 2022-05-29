@@ -1,9 +1,10 @@
-import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useParams } from "react-router-native";
-import { useQuery } from "@apollo/client";
 
-import { GET_REPOSITORY, GET_REVIEWS } from "../graphql/queries";
+import useRepo from "../hooks/useRepo";
+import RepositoryItem from "./RepositoryItem";
+import ItemSeparator from "./ItemSeparator";
+import theme from "../theme";
 import { Linky } from "./Link";
 import {
   LoadingText,
@@ -12,9 +13,6 @@ import {
   TextPrimary,
   TextSecondary,
 } from "./Text";
-import RepositoryItem from "./RepositoryItem";
-import ItemSeparator from "./ItemSeparator";
-import theme from "../theme";
 
 const styles = StyleSheet.create({
   reviewContainer: {
@@ -88,41 +86,10 @@ const ReviewItem = ({ review }) => {
 };
 
 const SingleRepository = () => {
-  const [repo, setRepo] = useState(null);
-  const [reviews, setReviews] = useState([]);
   const param = useParams();
+  const { repo, reviews, loading, fetchMore } = useRepo(param.id, 5);
 
-  const repoQuery = useQuery(GET_REPOSITORY, {
-    variables: { repositoryId: param.id },
-    onError: (error) => {
-      console.error("Get repo by id:", error);
-    },
-    onCompleted: (data) => {
-      if (data && data.repository !== null) {
-        setRepo(data.repository);
-      }
-    },
-    fetchPolicy: "cache-and-network",
-  });
-
-  const reviewsQuery = useQuery(GET_REVIEWS, {
-    variables: { repositoryId: param.id },
-    onError: (error) => {
-      console.error("Get repo reviews:", error);
-    },
-    onCompleted: (data) => {
-      if (data && data.repository.reviews !== null) {
-        const receivedReviews = data.repository.reviews.edges.map(
-          (edge) => edge.node
-        );
-
-        setReviews(receivedReviews);
-      }
-    },
-    fetchPolicy: "cache-and-network",
-  });
-
-  if (repoQuery.loading || reviewsQuery.loading) {
+  if (loading) {
     return <LoadingText />;
   }
 
@@ -134,6 +101,8 @@ const SingleRepository = () => {
       ListHeaderComponent={() => <RepositoryInfo repo={repo} />}
       ListEmptyComponent={() => <LoadingText text={"No reviews yet!"} />}
       ItemSeparatorComponent={() => <ItemSeparator />}
+      onEndReached={() => fetchMore()}
+      onEndReachedThreshold={0.5}
     />
   ) : null;
 };
