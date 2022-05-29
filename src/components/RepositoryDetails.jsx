@@ -111,7 +111,6 @@ const SingleRepository = () => {
       console.error("Get repo reviews:", error);
     },
     onCompleted: (data) => {
-      console.log("data", data);
       if (data && data.repository.reviews !== null) {
         const receivedReviews = data.repository.reviews.edges.map(
           (edge) => edge.node
