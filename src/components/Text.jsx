@@ -56,17 +56,17 @@ export const TextSecondary = ({ text, style }) => {
   );
 };
 
-export const TextBold = ({ text, style }) => {
+export const TextBold = ({ text, style, color = "primary" }) => {
   return (
-    <Text fontWeight="bold" color="primary" style={style}>
+    <Text fontWeight="bold" color={color} style={style}>
       {text}
     </Text>
   );
 };
 
-export const Subheading = ({ text, style }) => {
+export const Subheading = ({ text, style, color = "primary" }) => {
   return (
-    <Text fontWeight="bold" fontSize="subheading" style={style}>
+    <Text fontWeight="bold" color={color} fontSize="subheading" style={style}>
       {text}
     </Text>
   );
@@ -78,6 +78,10 @@ export const AppBarText = ({ text, style, color = "white" }) => {
       {text}
     </Text>
   );
+};
+
+export const LoadingText = ({ text = "Loading..." }) => {
+  return <Text fontSize="subheading">{text}</Text>;
 };
 
 export default Text;

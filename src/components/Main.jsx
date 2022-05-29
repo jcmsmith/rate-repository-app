@@ -6,7 +6,7 @@ import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
 import theme from "../theme";
 import SignInForm from "./SignInForm";
-import RepositoryDetails from "./RepositoryDetails";
+import SingleRepository from "./RepositoryDetails";
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -28,7 +28,7 @@ const Main = () => {
         <Routes>
           <Route exact path="/repositories" element={<RepositoryList />} />
 
-          <Route path="/repositories/:id" element={<RepositoryDetails />} />
+          <Route path="/repositories/:id" element={<SingleRepository />} />
 
           <Route exact path="/login" element={<SignInForm />} />
 

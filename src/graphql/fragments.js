@@ -20,3 +20,37 @@ export const REPOSITORY_DETAILS = gql`
     userHasReviewed
   }
 `;
+
+export const USER = gql`
+  fragment User on User {
+    id
+    username
+    createdAt
+    reviewCount
+  }
+`;
+
+export const REVIEW = gql`
+  fragment Review on ReviewEdge {
+    node {
+      id
+      text
+      rating
+      createdAt
+      user {
+        ...User
+      }
+    }
+  }
+  ${USER}
+`;
+
+export const REPOSITORY_REVIEWS = gql`
+  fragment RepositoryReviews on ReviewConnection {
+    totalCount
+    edges {
+      ...Review
+    }
+  }
+  ${REVIEW}
+`;

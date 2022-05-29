@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
     flexBasis: 50,
     flexGrow: 0,
     flexShrink: 1,
+    borderBottomWidth: 1,
+    margin: 5,
   },
   link: {
     alignSelf: "center",
-    marginTop: 5,
-    marginBottom: 5,
-    padding: 5,
+    padding: 2,
   },
 });
 
