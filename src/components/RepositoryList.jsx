@@ -6,15 +6,26 @@ import { Picker } from "@react-native-picker/picker";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
 import ItemSeparator from "./ItemSeparator";
+import TextInput from "./TextInput";
 
 const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState("CREATED_AT");
   const [orderDirection, setOrderDirection] = useState("DESC");
-  const { repositories } = useRepositories(orderBy, orderDirection);
+  const [filter, setFilter] = useState("");
+  const { repositories } = useRepositories(orderBy, orderDirection, filter);
+
+  const handleFilterChange = (event) => {
+    const value = event.nativeEvent.text;
+    setFilter(value);
+  };
 
   const listHeader = () => {
     return (
       <>
+        <TextInput
+          onEndEditing={handleFilterChange}
+          placeholder="Filter repositories"
+        />
         <Picker
           selectedValue={orderBy}
           onValueChange={(itemValue, _itemIndex) => setOrderBy(itemValue)}
@@ -35,6 +46,8 @@ const RepositoryList = () => {
       </>
     );
   };
+
+  console.log("filter", filter);
 
   return (
     <RepositoryListContainer repositories={repositories} header={listHeader} />
