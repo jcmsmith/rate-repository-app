@@ -31,9 +31,6 @@ const AppBar = () => {
           <View style={styles.tab}>
             <Linker text="Repositories" url="/repositories" />
           </View>
-          <View style={styles.tab}>
-            <Linker text="Create a review" url="/review" />
-          </View>
           <AuthTab />
         </ScrollView>
       </View>
@@ -65,15 +62,27 @@ const AuthTab = () => {
 
   return (
     <>
-      <View style={styles.tab}>
-        {user ? (
-          <Pressable onPressOut={handleLogout}>
-            <AppBarText text={"Logout"} />
-          </Pressable>
-        ) : (
-          <Linker text={"Login"} url={"/login"} />
-        )}
-      </View>
+      {user ? (
+        <>
+          <View style={styles.tab}>
+            <Linker text="Create a review" url="/review" />
+          </View>
+          <View style={styles.tab}>
+            <Pressable onPressOut={handleLogout}>
+              <AppBarText text={"Logout"} />
+            </Pressable>
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.tab}>
+            <Linker text={"Login"} url={"/login"} />
+          </View>
+          <View style={styles.tab}>
+            <Linker text={"Signup"} url={"/signup"} />
+          </View>
+        </>
+      )}
     </>
   );
 };

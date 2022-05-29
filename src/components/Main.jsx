@@ -5,9 +5,10 @@ import { Routes, Route, Navigate } from "react-router-native";
 import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
 import theme from "../theme";
-import SignInForm from "./SignInForm";
+import SignInForm from "./SigninForm";
 import SingleRepository from "./RepositoryDetails";
 import CreateReviewForm from "./CreateReviewForm";
+import SignupForm from "./SignupForm";
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -33,6 +34,7 @@ const Main = () => {
           <Route exact path="/review" element={<CreateReviewForm />} />
 
           <Route exact path="/login" element={<SignInForm />} />
+          <Route exact path="/signup" element={<SignupForm />} />
 
           <Route path="*" element={<Navigate to="/repositories" replace />} />
         </Routes>
