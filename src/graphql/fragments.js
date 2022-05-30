@@ -40,6 +40,9 @@ export const REVIEW = gql`
       user {
         ...User
       }
+      repository {
+        name
+      }
     }
   }
   ${USER}
@@ -54,8 +57,8 @@ export const PAGE_INFO = gql`
   }
 `;
 
-export const REPOSITORY_REVIEWS = gql`
-  fragment RepositoryReviews on ReviewConnection {
+export const REVIEWS = gql`
+  fragment Reviews on ReviewConnection {
     totalCount
     edges {
       ...Review

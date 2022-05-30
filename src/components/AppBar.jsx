@@ -31,14 +31,14 @@ const AppBar = () => {
           <View style={styles.tab}>
             <Linker text="Repositories" url="/repositories" />
           </View>
-          <AuthTab />
+          <AuthTabs />
         </ScrollView>
       </View>
     </>
   );
 };
 
-const AuthTab = () => {
+const AuthTabs = () => {
   const [user, setUser] = useState(null);
   const { signOut } = useAuth();
   const navigate = useNavigate();
@@ -66,6 +66,9 @@ const AuthTab = () => {
         <>
           <View style={styles.tab}>
             <Linker text="Create a review" url="/review" />
+          </View>
+          <View style={styles.tab}>
+            <Linker text="My reviews" url="/user/reviews" />
           </View>
           <View style={styles.tab}>
             <Pressable onPressOut={handleLogout}>

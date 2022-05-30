@@ -60,7 +60,12 @@ const RepositoryInfo = ({ repo }) => {
   );
 };
 
-const ReviewItem = ({ review }) => {
+export const ReviewItem = ({ review, title = "" }) => {
+  let titleText = review.user.username;
+  if (title) {
+    titleText = title;
+  }
+
   return (
     <View style={styles.reviewContainer}>
       <View style={styles.scoreColumn}>
@@ -74,7 +79,7 @@ const ReviewItem = ({ review }) => {
       </View>
 
       <View style={styles.reviewColumn}>
-        <Subheading text={review.user.username} style={styles.reviewText} />
+        <Subheading text={titleText} style={styles.reviewText} />
         <TextSecondary
           text={review.createdAt.substring(0, 10)}
           style={styles.reviewText}
@@ -87,7 +92,7 @@ const ReviewItem = ({ review }) => {
 
 const SingleRepository = () => {
   const param = useParams();
-  const { repo, reviews, loading, fetchMore } = useRepo(param.id, 5);
+  const { repo, reviews, loading, fetchMore } = useRepo(param.id, 10);
 
   if (loading) {
     return <LoadingText />;
