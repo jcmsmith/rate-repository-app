@@ -42,6 +42,7 @@ export const REVIEW = gql`
       }
       repository {
         name
+        id
       }
     }
   }

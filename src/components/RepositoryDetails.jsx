@@ -92,11 +92,11 @@ export const ReviewItem = ({ review, title = "" }) => {
 
 const SingleRepository = () => {
   const param = useParams();
-  const { repo, reviews, loading, fetchMore } = useRepo(param.id, 10);
+  const { repo, reviews, fetchMore } = useRepo(param.id, 10);
 
-  if (loading) {
-    return <LoadingText />;
-  }
+  // Navigating to this page from UserReviews DOES NOT WORK CORRECTLY without this console.log... It just stays blank until tapped.
+  // I tried different things, but this is what works for some reason
+  console.log();
 
   return repo ? (
     <FlatList
